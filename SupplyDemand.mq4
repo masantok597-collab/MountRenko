@@ -537,8 +537,7 @@ void FindZones()
 
          for(i=0; i<temp_count-1; i++)
            {
-            // skip already merged/removed entries
-            if(temp_hits[i]==-1 || temp_merge[i]==true)
+            if(temp_hits[i]==-1 || temp_merge[j]==true)
                continue;
 
             for(j=i+1; j<temp_count; j++)
@@ -839,13 +838,18 @@ bool NewBar()
 //+------------------------------------------------------------------+
 void DeleteZones()
   {
-   int len = 5;
-   // iterate backwards and delete objects with prefix "SSSR#"
-   for(int i = ObjectsTotal() - 1; i >= 0; i--)
+   int len=5;
+   int i;
+
+   while(i<ObjectsTotal())
      {
-      string objName = ObjectName(i);
-      if(StringSubstr(objName,0,len) == "SSSR#")
-         ObjectDelete(objName);
+      string objName=ObjectName(i);
+      if(StringSubstr(objName,0,len)!="SSSR#")
+        {
+         i++;
+         continue;
+        }
+      ObjectDelete(objName);
      }
   }
 //+------------------------------------------------------------------+
